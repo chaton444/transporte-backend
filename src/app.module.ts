@@ -16,11 +16,11 @@ import { LocalStrategy } from './auth/local.strategy'; // Importa LocalStrategy
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
+      host: 'localhost',
+      port: 5432,
+      username: 'chaton44',
+      password: '2001',
+      database: 'transport_data',
       entities: [TransportData, User],
       synchronize: process.env.NODE_ENV !== 'production', // No usar en producción
     }),
