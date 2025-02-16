@@ -30,11 +30,21 @@ export class AuthService {
   }
 
   async register(user: User): Promise<User> {
+    // Validate input
+    if (!user.email || !user.password) {
+      throw new UnauthorizedException('Email and password are required');
+    }
+  
+    // Check if the user already exists
     const existingUser = await this.userRepository.findOne({ where: { email: user.email } });
     if (existingUser) {
       throw new UnauthorizedException('El usuario ya existe, Intenta con otro');
     }
+  
+    // Hash the password
     user.password = await bcrypt.hash(user.password, 10);
+  
+    // Save the user
     return this.userRepository.save(user);
   }
 }
