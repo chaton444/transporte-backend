@@ -22,7 +22,7 @@ import { LocalStrategy } from './auth/local.strategy'; // Importa LocalStrategy
       password: '2001',
       database: 'transport_data',
       entities: [TransportData, User],
-      synchronize: process.env.NODE_ENV !== 'production',
+      synchronize: true,
     })
     ,
     
