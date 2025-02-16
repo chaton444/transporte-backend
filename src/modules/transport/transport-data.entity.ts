@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 //codigo de la entidad 
-@Entity('trnasport_data')
+@Entity('transport_data')
 export class TransportData {
   @PrimaryColumn()
   id: string;
