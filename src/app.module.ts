@@ -23,6 +23,7 @@ import { LocalStrategy } from './auth/local.strategy'; // Importa LocalStrategy
       database: 'transport_data',
       entities: [TransportData, User],
       synchronize: true,
+      dropSchema: true,
     })
     ,
     
