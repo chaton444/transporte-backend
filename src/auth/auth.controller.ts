@@ -8,10 +8,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-async register(@Body() user: User): Promise<User> {
-  console.log('Received user data:', user); // Depuración
-  return this.authService.register(user);
-}
+  async register(@Body() user: User): Promise<User> {
+    console.log('Received user data:', user); // Depuración
+    return this.authService.register(user);
+  }
 
   @UseGuards(AuthGuard('local')) // Usa la estrategia local
   @Post('login')

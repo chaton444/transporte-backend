@@ -47,6 +47,8 @@ export class AuthService {
     }
   
     // Hashear la contraseña
+    console.log('Hashing password:', user.password); // Depuración
+    console.log('Password type:', typeof user.password); // Depuración
     user.password = await bcrypt.hash(user.password, 10);
   
     // Guardar el usuario en la base de datos
