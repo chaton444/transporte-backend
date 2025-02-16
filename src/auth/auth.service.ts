@@ -46,12 +46,8 @@ export class AuthService {
       throw new UnauthorizedException('El usuario ya existe, Intenta con otro');
     }
   
-    // Hashear la contraseña
-    console.log('Hashing password:', user.password); // Depuración
-    console.log('Password type:', typeof user.password); // Depuración
-    user.password = await bcrypt.hash(user.password, 10);
-  
-    // Guardar el usuario en la base de datos
+    // Guardar el usuario en la base de datos (sin hashear la contraseña)
+    console.log('Saving user with plain password:', user); // Depuración
     return this.userRepository.save(user);
   }
 }
