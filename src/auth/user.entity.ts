@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-//entidad de usuarios
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -9,7 +9,7 @@ export class User {
   email: string;
 
   @Column()
-  password: string;
+  password: string; // Asegúrate de que sea una cadena
 
   @CreateDateColumn()
   createdAt: Date;
