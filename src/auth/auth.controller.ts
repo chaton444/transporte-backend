@@ -9,7 +9,6 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() user: User): Promise<User> {
-    console.log('Received user data:', user); // Depuración
     return this.authService.register(user);
   }
 

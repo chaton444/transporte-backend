@@ -30,24 +30,11 @@ export class AuthService {
   }
 
   async register(user: User): Promise<User> {
-    // Validar que los campos no estén vacíos
-    if (!user.email || !user.password) {
-      throw new UnauthorizedException('Email and password are required');
-    }
-  
-    // Verificar que la contraseña sea una cadena válida
-    if (typeof user.password !== 'string') {
-      throw new UnauthorizedException('Invalid password format');
-    }
-  
-    // Verificar si el usuario ya existe
     const existingUser = await this.userRepository.findOne({ where: { email: user.email } });
     if (existingUser) {
       throw new UnauthorizedException('El usuario ya existe, Intenta con otro');
     }
-  
-    // Guardar el usuario en la base de datos (sin hashear la contraseña)
-    console.log('Saving user with plain password:', user); // Depuración
+    user.password = await bcrypt.hash(user.password, 10);
     return this.userRepository.save(user);
   }
 }
