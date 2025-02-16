@@ -16,14 +16,15 @@ import { LocalStrategy } from './auth/local.strategy'; // Importa LocalStrategy
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'chaton44',//usuario de la bd de postgreSql
-      password: '2001',
-      database: 'transport_data',
-      entities: [TransportData, User], //las entidades a usar 
-      synchronize: true, // Solo para desarrollo, en el deploy debe ser false (recordatorio para no olvidar)
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+      entities: [TransportData, User],
+      synchronize: process.env.NODE_ENV !== 'production', // No usar en producción
     }),
+    
     TypeOrmModule.forFeature([TransportData, User]), // Registra las entidades para su uso en los servicios
     PassportModule.register({ defaultStrategy: 'jwt' }), // Configura Passport con la estrategia JWT
     JwtModule.register({
