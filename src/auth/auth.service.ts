@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException,ConflictException  } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -30,11 +30,16 @@ export class AuthService {
   }
 
   async register(user: User): Promise<User> {
+    if (!user.password || typeof user.password !== 'string') {
+      throw new BadRequestException('La contraseña debe ser una cadena de texto válida');
+    }
+  
     const existingUser = await this.userRepository.findOne({ where: { email: user.email } });
     if (existingUser) {
-      throw new UnauthorizedException('El usuario ya existe, Intenta con otro');
+      throw new ConflictException('El usuario ya existe, Intenta con otro');
     }
-    user.password = await bcrypt.hash(user.password, 10);
+  
+    user.password = await bcrypt.hash(user.password, 10); // Ahora es seguro
     return this.userRepository.save(user);
   }
 }
