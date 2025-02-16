@@ -43,7 +43,6 @@ export class DatabaseService {
         await this.transportDataRepository.save(transportRecord);
       }
     }
-    
   }
 //separar transporte nombre para posteriormente poder verlos en angular
 async getTransportes(): Promise<string[]> {
