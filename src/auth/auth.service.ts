@@ -3,8 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import * as bcrypt from 'bcryptjs';
-//metodos para el servicio de validar los usuarios,registrar y login
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -15,7 +14,7 @@ export class AuthService {
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.userRepository.findOne({ where: { email } });
-    if (user && bcrypt.compareSync(pass, user.password)) {
+    if (user && user.password === pass) { // Compara las contraseñas directamente
       const { password, ...result } = user;
       return result;
     }
@@ -25,7 +24,7 @@ export class AuthService {
   async login(user: any) {
     const payload = { email: user.email, sub: user.id };
     return {
-      access_token: this.jwtService.sign(payload),//da acceso al token
+      access_token: this.jwtService.sign(payload),
     };
   }
 
@@ -34,7 +33,7 @@ export class AuthService {
     if (existingUser) {
       throw new UnauthorizedException('El usuario ya existe, Intenta con otro');
     }
-    user.password = await bcrypt.hash(user.password, 10);
+    // Aquí no usamos bcrypt para encriptar la contraseña
     return this.userRepository.save(user);
   }
 }
